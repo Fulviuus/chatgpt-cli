@@ -34,6 +34,16 @@ if (args.length === 0) {
 
 const historyFile = `${Deno.env.get("HOME")}/.conversation_history.json`;
 
+function displayHelp() {
+  console.log(cyan(bold("Usage: ")) + "cligpt [options] [prompt]");
+  console.log("\n" + cyan(bold("Options:")));
+  console.log("  -c, --clear-history     Clear conversation history");
+  console.log("  -s, --show-history      Show conversation history");
+  console.log("  -h, --help              Show help information");
+}
+
+
+
 async function updateConversationHistory(newMessage) {
   let conversationHistory = [];
 
@@ -83,21 +93,24 @@ function printConversationHistory(conversationHistory) {
   });
 }
 
+if (args.includes("--help") || args.includes("-h")) {
+  displayHelp();
+  Deno.exit(0);
+}
 
-// Check for the --clear-history option
-if (args.includes("--clear-history")) {
+// Check for the --clear-history option and its shorthand
+if (args.includes("--clear-history") || args.includes("-c")) {
   await clearConversationHistory();
   console.log(yellow(bold("Info: ")) + "Conversation history cleared.");
   Deno.exit(0);
 }
 
-if (args.includes("--show-history")) {
+// Check for the --show-history option and its shorthand
+if (args.includes("--show-history") || args.includes("-s")) {
   const conversationHistory = await readConversationHistory();
   printConversationHistory(conversationHistory);
   Deno.exit(0);
 }
-
-
 
 const prompt = args.join(" ");
 const terminalSpinner = new TerminalSpinner("Please wait...");
