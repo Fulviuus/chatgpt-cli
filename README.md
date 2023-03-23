@@ -2,6 +2,9 @@
 
 A simple command-line interface (CLI) for OpenAI's ChatGPT powered by Deno.
 
+![Screencast](assets/screencast-cligpt.gif?raw=true "Demo - Screencast")
+
+
 ## Features
 
 - Send prompts to ChatGPT and receive responses.
@@ -37,7 +40,7 @@ Replace `your_openai_api_key` with your actual OpenAI API key and `model_version
 Navigate to the project directory and run the script with the desired options:
 
 ```bash
-deno run --allow-env --allow-read --allow-write cligpt.ts [options] [prompt]
+deno run --allow-env --allow-read --allow-write --allow-net cligpt.ts [options] [prompt]
 ```
 
 ### Options
@@ -51,7 +54,7 @@ deno run --allow-env --allow-read --allow-write cligpt.ts [options] [prompt]
 1. Send a prompt to ChatGPT:
 
 ```bash
-deno run --allow-env --allow-read --allow-write cligpt.ts "What is the capital of France?"
+deno run --allow-env --allow-read --allow-write --allow-net cligpt.ts "What is the capital of France?"
 ```
 
 2. Show conversation history:
@@ -75,7 +78,7 @@ You can set up an alias to run the ChatGPT CLI script more easily. Add the follo
 Add the following line to your `~/.bashrc`:
 
 ```bash
-alias cligpt='OPENAI_API_KEY=your_openai_api_key MODEL_VERSION=model_version deno run --allow-env --allow-read --allow-write /path/to/cligpt.ts'
+alias cligpt='OPENAI_API_KEY=your_openai_api_key MODEL_VERSION=model_version deno run --allow-env --allow-read --allow-write --allow-net /path/to/cligpt.ts'
 ```
 
 Then, run `source ~/.bashrc` to apply the changes.
@@ -85,7 +88,7 @@ Then, run `source ~/.bashrc` to apply the changes.
 Add the following line to your `~/.zshrc`:
 
 ```bash
-alias cligpt='OPENAI_API_KEY=your_openai_api_key MODEL_VERSION=model_version deno run --allow-env --allow-read --allow-write /path/to/cligpt.ts'
+alias cligpt='OPENAI_API_KEY=your_openai_api_key MODEL_VERSION=model_version deno run --allow-env --allow-read --allow-write --allow-net /path/to/cligpt.ts'
 ```
 
 Then, run `source ~/.zshrc` to apply the changes.
