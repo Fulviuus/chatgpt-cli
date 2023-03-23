@@ -22,7 +22,7 @@ A simple command-line interface (CLI) for OpenAI's ChatGPT powered by Deno.
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/chatgpt-cli.git
+git clone https://github.com/Fulviuus/chatgpt-cli 
 cd chatgpt-cli
 ```
 
