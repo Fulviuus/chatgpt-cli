@@ -1,0 +1,23 @@
+# Deno cache and compiled binaries #
+#####################################
+/.deno
+/.deno_cache
+/.deno_plugins
+
+# Environment variables #
+##########################
+.env
+
+# Compiled source #
+###################
+*.exe
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+
+# OS generated files #
+######################
+.DS_Store
+Thumbs.db
