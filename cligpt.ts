@@ -32,18 +32,90 @@ if (args.length === 0) {
   Deno.exit(0);
 }
 
+const historyFile = `${Deno.env.get("HOME")}/.conversation_history.json`;
+
+async function updateConversationHistory(newMessage) {
+  let conversationHistory = [];
+
+  try {
+    const historyJson = await Deno.readTextFile(historyFile);
+    conversationHistory = JSON.parse(historyJson);
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      await Deno.writeTextFile(historyFile, JSON.stringify(conversationHistory));
+    } else {
+      console.error(red(bold("Error: ")) + "Failed to read conversation history.");
+      Deno.exit(1);
+    }
+  }
+
+  conversationHistory.push(newMessage);
+  await Deno.writeTextFile(historyFile, JSON.stringify(conversationHistory));
+  return conversationHistory;
+}
+
+async function clearConversationHistory() {
+  await Deno.writeTextFile(historyFile, JSON.stringify([]));
+}
+
+async function readConversationHistory() {
+  let conversationHistory = [];
+
+  try {
+    const historyJson = await Deno.readTextFile(historyFile);
+    conversationHistory = JSON.parse(historyJson);
+  } catch (error) {
+    if (error instanceof Deno.errors.NotFound) {
+      await Deno.writeTextFile(historyFile, JSON.stringify(conversationHistory));
+    } else {
+      console.error(red(bold("Error: ")) + "Failed to read conversation history.");
+      Deno.exit(1);
+    }
+  }
+
+  return conversationHistory;
+}
+
+function printConversationHistory(conversationHistory) {
+  conversationHistory.forEach((message) => {
+    const role = message.role === "user" ? cyan(bold("User: ")) : green(bold("Assistant: "));
+    console.log(role + message.content);
+  });
+}
+
+
+// Check for the --clear-history option
+if (args.includes("--clear-history")) {
+  await clearConversationHistory();
+  console.log(yellow(bold("Info: ")) + "Conversation history cleared.");
+  Deno.exit(0);
+}
+
+if (args.includes("--show-history")) {
+  const conversationHistory = await readConversationHistory();
+  printConversationHistory(conversationHistory);
+  Deno.exit(0);
+}
+
+
+
 const prompt = args.join(" ");
 const terminalSpinner = new TerminalSpinner("Please wait...");
 terminalSpinner.start();
 
 try {
+  const userMessage = { role: "user", content: prompt };
+  const conversationHistory = await updateConversationHistory(userMessage);
   const response = await openai.createChatCompletion({
     model: MODEL_VERSION,
-    messages: [{ role: "user", content: prompt }],
+    messages: conversationHistory,
   });
 
+  const assistantMessage = response.choices[0].message.content.trim();
+  await updateConversationHistory({ role: "assistant", content: assistantMessage });
+
   terminalSpinner.stop();
-  console.log(green(bold("Response: ")) + response.choices[0].message.content.trim());
+  console.log(green(bold("Response: ")) + assistantMessage);
 } catch (error) {
   terminalSpinner.stop();
   console.error(red(bold("Error: ")) + error.message);
