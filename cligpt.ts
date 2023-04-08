@@ -11,6 +11,11 @@ import {
 import { TerminalSpinner } from "https://deno.land/x/spinners/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 
+interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
 const openaiApiKeyFromEnv = Deno.env.get("OPENAI_API_KEY");
 const modelVersionFromEnv = Deno.env.get("MODEL_VERSION");
 
@@ -42,9 +47,7 @@ function displayHelp() {
   console.log("  -h, --help              Show help information");
 }
 
-
-
-async function updateConversationHistory(newMessage) {
+async function updateConversationHistory(newMessage: Message): Promise<Message[]> {
   let conversationHistory = [];
 
   try {
@@ -64,11 +67,11 @@ async function updateConversationHistory(newMessage) {
   return conversationHistory;
 }
 
-async function clearConversationHistory() {
+async function clearConversationHistory(): Promise<void> {
   await Deno.writeTextFile(historyFile, JSON.stringify([]));
 }
 
-async function readConversationHistory() {
+async function readConversationHistory(): Promise<Message[]> {
   let conversationHistory = [];
 
   try {
@@ -86,7 +89,7 @@ async function readConversationHistory() {
   return conversationHistory;
 }
 
-function printConversationHistory(conversationHistory) {
+function printConversationHistory(conversationHistory: Message[]): void {
   conversationHistory.forEach((message) => {
     const role = message.role === "user" ? cyan(bold("User: ")) : green(bold("Assistant: "));
     console.log(role + message.content);
@@ -106,7 +109,7 @@ if (args.includes("--clear-history") || args.includes("-c")) {
 }
 
 // Check for the --show-history option and its shorthand
-if (args.includes("--history") || args.includes("-h")) {
+if (args.includes("--list-history") || args.includes("-l")) {
   const conversationHistory = await readConversationHistory();
   printConversationHistory(conversationHistory);
   Deno.exit(0);
