@@ -21,3 +21,7 @@
 ######################
 .DS_Store
 Thumbs.db
+
+# Editor files #
+################
+/.vscode

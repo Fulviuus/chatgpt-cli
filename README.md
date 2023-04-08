@@ -4,7 +4,6 @@ A simple command-line interface (CLI) for OpenAI's ChatGPT powered by Deno.
 
 ![Screencast](assets/screencast-cligpt.gif?raw=true "Demo - Screencast")
 
-
 ## Features
 
 - Send prompts to ChatGPT and receive responses.
@@ -15,7 +14,9 @@ A simple command-line interface (CLI) for OpenAI's ChatGPT powered by Deno.
 
 ## Prerequisites
 
-- [Deno](https://deno.land/): A secure runtime for JavaScript and TypeScript. Please follow the [installation guide](https://deno.land/#installation) on their official website.
+- [Deno](https://deno.land/): A secure runtime for JavaScript and TypeScript.
+  Please follow the [installation guide](https://deno.land/#installation) on
+  their official website.
 
 ## Installation
 
@@ -26,14 +27,17 @@ git clone https://github.com/Fulviuus/chatgpt-cli
 cd chatgpt-cli
 ```
 
-2. Create a `.env` file in the root directory of the project with the following content:
+2. Create a `.env` file in the root directory of the project with the following
+   content:
 
 ```
 OPENAI_API_KEY=your_openai_api_key
 MODEL_VERSION=model_version
 ```
 
-Replace `your_openai_api_key` with your actual OpenAI API key and `model_version` with the desired GPT model version (e.g., `gpt-4` or `gpt-3.5-turbo`).
+Replace `your_openai_api_key` with your actual OpenAI API key and
+`model_version` with the desired GPT model version (e.g., `gpt-4` or
+`gpt-3.5-turbo`).
 
 ## Usage
 
@@ -46,7 +50,7 @@ deno run --allow-env --allow-read --allow-write --allow-net cligpt.ts [options] 
 ### Options
 
 - `-c`, `--clear-history`: Clear conversation history.
-- `-s`, `--show-history`: Show conversation history.
+- `-l`, `--list-history`: List conversation history.
 - `-h`, `--help`: Show help information.
 
 ### Examples
@@ -71,7 +75,11 @@ deno run --allow-env --allow-read --allow-write cligpt.ts -c
 
 ## Configure Alias
 
-You can set up an alias to run the ChatGPT CLI script more easily. Add the following lines to your shell configuration file (`.bashrc` for Bash or `.zshrc` for Zsh), replacing `/path/to/cligpt.ts` with the actual path to the `cligpt.ts` file in your project directory, and `your_openai_api_key` and `model_version` with your actual OpenAI API key and desired GPT model version, respectively:
+You can set up an alias to run the ChatGPT CLI script more easily. Add the
+following lines to your shell configuration file (`.bashrc` for Bash or `.zshrc`
+for Zsh), replacing `/path/to/cligpt.ts` with the actual path to the `cligpt.ts`
+file in your project directory, and `your_openai_api_key` and `model_version`
+with your actual OpenAI API key and desired GPT model version, respectively:
 
 ### Bash
 
@@ -93,8 +101,8 @@ alias cligpt='OPENAI_API_KEY=your_openai_api_key MODEL_VERSION=model_version den
 
 Then, run `source ~/.zshrc` to apply the changes.
 
-After setting up the alias, you can use the `cligpt` command followed by options and prompts, e.g., `cligpt -s` or `cligpt "What is the capital of France?"`.
-
+After setting up the alias, you can use the `cligpt` command followed by options
+and prompts, e.g., `cligpt -s` or `cligpt "What is the capital of France?"`.
 
 ## License
 

@@ -38,7 +38,7 @@ function displayHelp() {
   console.log(cyan(bold("Usage: ")) + "cligpt [options] [prompt]");
   console.log("\n" + cyan(bold("Options:")));
   console.log("  -c, --clear-history     Clear conversation history");
-  console.log("  -s, --show-history      Show conversation history");
+  console.log("  -l, --list-history      List conversation history");
   console.log("  -h, --help              Show help information");
 }
 
@@ -106,7 +106,7 @@ if (args.includes("--clear-history") || args.includes("-c")) {
 }
 
 // Check for the --show-history option and its shorthand
-if (args.includes("--show-history") || args.includes("-s")) {
+if (args.includes("--history") || args.includes("-h")) {
   const conversationHistory = await readConversationHistory();
   printConversationHistory(conversationHistory);
   Deno.exit(0);
